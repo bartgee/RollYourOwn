@@ -16,8 +16,10 @@ class Cigarette(object):
 
     def tobacco(self, pack_weight=40, price=18.0):
         if self.cig_size == 'slim':
+            print(pack_weight)
             number_of_cigs = pack_weight / 0.5
         elif self.cig_size == 'regular':
+            print('pack_weight=' + str(pack_weight)) # temporary
             number_of_cigs = pack_weight / 1.0
         self.tobacco_price = price / number_of_cigs
         return round(self.tobacco_price, 2)
@@ -48,9 +50,22 @@ def cig_config(size='slim', rof='rolled'):
     global cigs
     if rof == 'rolled':
         cigs = Cigarette(size, 'rolled')
-        print get_or_set_prices()
-        print(cigs.tobacco())
-        #print(cigs.tobacco_price)
+        new_prices = get_or_set_prices()
+        print(new_prices)
+        prices_list = []
+        for key, value in new_prices.iteritems():
+            print key, value
+            prices_list.append(key + '=' + str(value))
+        prices_string = ''
+        for element in prices_list:
+            prices_string = prices_string + element
+            if len(prices_list) > 1:
+                prices_string = prices_string + ', '
+        prices_string = prices_string[:-2]
+        print(prices_string)
+        code = 'cigs.tobacco({})'.format(prices_string)
+        exec code
+
         print(cigs.filters())
         print(cigs.paper_leaves())
         print(cigs.get_cig_price())
@@ -72,19 +87,20 @@ def get_or_set_prices():
     tobacco_params = cigs.tobacco.func_defaults
     tobacco_weight = raw_input('tobacco weight (' + str(tobacco_params[0]) + ') >')
     if tobacco_weight:
-        prices_dict['tobacco weight'] = int(tobacco_weight)
+        prices_dict['pack_weight'] = float(tobacco_weight)
     else:
-        prices_dict['tobacco weight'] = None
+        pass
+        #prices_dict['tobacco weight'] = ''
     tobacco_price = raw_input('tobacco price (' + str(tobacco_params[1]) + ') >')
     if tobacco_price:
-        prices_dict['tobacco price'] = int(tobacco_price)
+        prices_dict['price'] = float(tobacco_price)
     else:
-        prices_dict['tobacco price'] = None
+        pass
+        #prices_dict['tobacco price'] = ''
     return prices_dict
 
 def input_data():
     input_dict = {}
-    #print('tobbaco_price: ' + Cigarette.tobacco_price)
     rof = raw_input('(r)olled or (f)illed? >')
     if rof == 'r' or rof == 'R':
         rof = 'rolled'
