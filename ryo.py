@@ -14,26 +14,26 @@ class Cigarette(object):
         else:
             self.cig_size = cig_size
 
-    def tobacco(self, pack_weight=40, price=18.0):
+    def tobacco(self, tobacco_weight=40, tobacco_price=18.0):
         if self.cig_size == 'slim':
-            print(pack_weight)
-            number_of_cigs = pack_weight / 0.5
+            print(tobacco_weight)
+            number_of_cigs = tobacco_weight / 0.5
         elif self.cig_size == 'regular':
-            print('pack_weight=' + str(pack_weight)) # temporary
-            number_of_cigs = pack_weight / 1.0
-        self.tobacco_price = price / number_of_cigs
+            print('pack_weight=' + str(tobacco_weight)) # temporary
+            number_of_cigs = tobacco_weight / 1.0
+        self.tobacco_price = tobacco_price / number_of_cigs
         return round(self.tobacco_price, 2)
 
-    def filters(self, quantity=120, price=4.0):
-        self.filter_price = price / quantity
+    def filters(self, filters_quantity=120, filters_price=4.0):
+        self.filter_price = filters_price / filters_quantity
         return round(self.filter_price, 2)
 
-    def filter_tubes(self, quantity=200, price=4.0):
-        self.tube_price = price / quantity
+    def filter_tubes(self, filter_tubes_quantity=200, filter_tubes_price=4.0):
+        self.tube_price = filter_tubes_price / filter_tubes_quantity
         return round(self.tube_price, 2)
 
-    def paper_leaves(self, quantity=50, price=1.80):
-        self.leaf_price = price / quantity
+    def paper_leaves(self, paper_leaves_quantity=50, paper_leaves_price=1.80):
+        self.leaf_price = paper_leaves_price / paper_leaves_quantity
         return round(self.leaf_price, 2)
 
     def get_cig_price(self):
@@ -70,7 +70,7 @@ def cig_config(size='slim', rof='rolled'):
         print(cigs.paper_leaves())
         print(cigs.get_cig_price())
         pack_price = cigs.get_pack_price()
-        print(pack_price)
+        print(pack_price)raw_input()
     elif rof == 'filled':
         cigs = Cigarette(size, 'filled')
         print get_or_set_prices()
@@ -85,18 +85,24 @@ def get_or_set_prices():
     global cigs
     prices_dict = {}
     tobacco_params = cigs.tobacco.func_defaults
+    filters_params = cigs.filters.func_defaults
+
     tobacco_weight = raw_input('tobacco weight (' + str(tobacco_params[0]) + ') >')
     if tobacco_weight:
-        prices_dict['pack_weight'] = float(tobacco_weight)
+        prices_dict['tobacco_weight'] = float(tobacco_weight)
     else:
         pass
-        #prices_dict['tobacco weight'] = ''
+
     tobacco_price = raw_input('tobacco price (' + str(tobacco_params[1]) + ') >')
     if tobacco_price:
-        prices_dict['price'] = float(tobacco_price)
+        prices_dict['tobacco_price'] = float(tobacco_price)
     else:
         pass
-        #prices_dict['tobacco price'] = ''
+
+    # filter_quantity = raw_input('filter quantity (' + str(filters_params[0] + ') >'))
+    # if filter_quantity:
+    #     prices_dict
+
     return prices_dict
 
 def input_data():
