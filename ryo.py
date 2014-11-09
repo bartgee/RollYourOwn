@@ -5,6 +5,8 @@
 
 __version__ = '0.1'
 
+import re
+
 class Cigarette(object):
 
     def __init__(self, cig_size='slim', rolled_or_filled='rolled'):
@@ -50,27 +52,30 @@ def cig_config(size='slim', rof='rolled'):
     global cigs
     if rof == 'rolled':
         cigs = Cigarette(size, 'rolled')
-        new_prices = get_or_set_prices()
-        print(new_prices)
-        prices_list = []
-        for key, value in new_prices.iteritems():
-            print key, value
-            prices_list.append(key + '=' + str(value))
-        prices_string = ''
-        for element in prices_list:
-            prices_string = prices_string + element
-            if len(prices_list) > 1:
-                prices_string = prices_string + ', '
-        prices_string = prices_string[:-2]
-        print(prices_string)
-        code = 'cigs.tobacco({})'.format(prices_string)
-        exec code
+        new_prices_dict = get_or_set_prices()
+        print(new_prices_dict)
+        if 'tobacco weight' or 'tobacco_price' in new_prices_dict:
+            prices_list = []
+
+            for key, value in new_prices_dict.iteritems():
+                print key, value
+                if re.match('tobaco', key):
+                    prices_list.append(key + '=' + str(value))
+            prices_string = ''
+            for element in prices_list:
+                prices_string = prices_string + element
+                if len(prices_list) > 1:
+                    prices_string = prices_string + ', '
+            prices_string = prices_string[:-2]
+            print(prices_string)
+            code = 'cigs.tobacco({})'.format(prices_string)
+            exec code
 
         print(cigs.filters())
         print(cigs.paper_leaves())
         print(cigs.get_cig_price())
         pack_price = cigs.get_pack_price()
-        print(pack_price)raw_input()
+        print(pack_price)#raw_input()
     elif rof == 'filled':
         cigs = Cigarette(size, 'filled')
         print get_or_set_prices()
@@ -99,9 +104,17 @@ def get_or_set_prices():
     else:
         pass
 
-    # filter_quantity = raw_input('filter quantity (' + str(filters_params[0] + ') >'))
-    # if filter_quantity:
-    #     prices_dict
+    filters_quantity = raw_input('filters quantity (' + str(filters_params[0]) + ') >')
+    if filters_quantity:
+        prices_dict['filters_quantity'] = int(filters_quantity)
+    else:
+        pass
+
+    filters_price = raw_input('filters price (' + str(filters_params[1]) + ') >')
+    if filters_price:
+        prices_dict['filters_price'] = float(filters_price)
+    else:
+        pass
 
     return prices_dict
 
