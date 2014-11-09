@@ -54,12 +54,12 @@ def cig_config(size='slim', rof='rolled'):
         cigs = Cigarette(size, 'rolled')
         new_prices_dict = get_or_set_prices()
         print(new_prices_dict)
-        if 'tobacco weight' or 'tobacco_price' in new_prices_dict:
+        if 'tobacco_weight' or 'tobacco_price' in new_prices_dict:
             prices_list = []
 
             for key, value in new_prices_dict.iteritems():
                 print key, value
-                if re.match('tobaco', key):
+                if re.match('tobacco', key):
                     prices_list.append(key + '=' + str(value))
             prices_string = ''
             for element in prices_list:
@@ -69,9 +69,28 @@ def cig_config(size='slim', rof='rolled'):
             prices_string = prices_string[:-2]
             print(prices_string)
             code = 'cigs.tobacco({})'.format(prices_string)
+            print('code=' + code)
             exec code
 
-        print(cigs.filters())
+        if 'filters_quantity' or 'filters_price' in new_prices_dict:
+            prices_list = []
+
+            for key, value in new_prices_dict.iteritems():
+                print key, value
+                if re.match('filters', key):
+                    prices_list.append(key + '=' + str(value))
+            prices_string = ''
+            for element in prices_list:
+                prices_string = prices_string + element
+                if len(prices_list) > 1:
+                    prices_string = prices_string + ', '
+            prices_string = prices_string[:-2]
+            print(prices_string)
+            code = 'cigs.filters({})'.format(prices_string)
+            print('code=' + code)
+            exec code
+
+        #print(cigs.filters())
         print(cigs.paper_leaves())
         print(cigs.get_cig_price())
         pack_price = cigs.get_pack_price()
