@@ -5,6 +5,8 @@
 
 __version__ = '0.1'
 
+import os
+import platform
 import re
 
 class Cigarette(object):
@@ -103,12 +105,13 @@ def cig_config(size='slim', rof='rolled'):
                 if len(prices_list) > 1:
                     prices_string = prices_string + ', '
             prices_string = prices_string[:-2]
-            #print(prices_string)
+            #prices_dict['paper_leaves_price'] = float(paper_leaves_price)(prices_string)
             code = 'cigs.paper_leaves({})'.format(prices_string)
             #print('code=' + code)
             exec code
 
         #print(cigs.get_cig_price())
+        cig_price = cigs.get_cig_price()
         pack_price = cigs.get_pack_price()
         #print(pack_price)#raw_input()
     elif rof == 'filled':
@@ -211,7 +214,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
 
         paper_leaves_price = raw_input('paper leaves price (' + str(paper_leaves_params[1]) + ') >')
         if paper_leaves_price:
-            prices_dict['paper_leaves_price'] = int(paper_leaves_price)
+            prices_dict['paper_leaves_price'] = float(paper_leaves_price)
         else:
             pass
 
@@ -220,20 +223,45 @@ def get_or_set_prices(size='slim', rof='rolled'):
 
 def input_data():
     input_dict = {}
-    rof = raw_input('(r)olled or (f)illed? >')
-    if rof == 'r' or rof == 'R':
-        rof = 'rolled'
-    elif rof == 'f' or rof == 'F':
-        rof = 'filled'
-    size = raw_input('(s)lim or (r)egular? >')
-    if size == 's' or size == 'S':
-        size = 'slim'
-    elif size == 'r' or size == 'R':
-        size = 'regular'
+    running = True
+    while running:
+        rof = raw_input('(r)olled or (f)illed? >')
+        if rof == 'r' or rof == 'R':
+            rof = 'rolled'
+            running = False
+        elif rof == 'f' or rof == 'F':
+            rof = 'filled'
+            running = False
+
+    running = True
+    while running:
+        size = raw_input('(s)lim or (r)egular? >')
+        if size == 's' or size == 'S':
+            size = 'slim'
+            running = False
+        elif size == 'r' or size == 'R':
+            size = 'regular'
+            running = False
     input_dict = {'size': size, 'rof': rof}
     return input_dict
 
+def clear_screen():
+    ''' Clears the screen.
+
+    usage: clearscreen()
+    '''
+    os_platform = platform.system()
+    if os_platform == 'Windows':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+def print_header():
+    print('RollYourOwn ' + __version__ )
+
 def main():
+    clear_screen()
+    print_header()
     user_data = input_data()
     print user_data
     print(cig_config(user_data['size'], user_data['rof']))
