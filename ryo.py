@@ -225,6 +225,12 @@ def input_data():
     input_dict = {}
     running = True
     while running:
+        cigs_daily = raw_input('how many cigs you smoke daily? >')
+        if cigs_daily.isdigit():
+            running = False
+
+    running = True
+    while running:
         rof = raw_input('(r)olled or (f)illed? >')
         if rof == 'r' or rof == 'R':
             rof = 'rolled'
@@ -242,7 +248,7 @@ def input_data():
         elif size == 'r' or size == 'R':
             size = 'regular'
             running = False
-    input_dict = {'size': size, 'rof': rof}
+    input_dict = {'size': size, 'rof': rof, 'cigs_daily': int(cigs_daily)}
     return input_dict
 
 def clear_screen():
@@ -259,12 +265,53 @@ def clear_screen():
 def print_header():
     print('RollYourOwn ' + __version__ )
 
+def get_savings(cigs_daily, ryo_cig_price, ord_cig_price):
+    savings_dict = {}
+    cigs_monthly = cigs_daily * 30
+    cigs_yearly = cigs_monthly * 12
+
+    cigs_daily_price = cigs_daily * ryo_cig_price
+    cigs_monthly_price = cigs_daily_price * 30
+    cigs_yearly_price = cigs_monthly_price * 12
+
+    ord_cigs_daily_price = cigs_daily * ord_cig_price
+    ord_cigs_monthly_price = ord_cigs_daily_price * 30
+    ord_cigs_yearly_price = ord_cigs_monthly_price * 12
+
+    savings_dict['cigs_daily'] = cigs_daily
+    savings_dict['cigs_monthly'] = cigs_monthly
+    savings_dict['cigs_yearly'] = cigs_yearly
+
+    savings_dict['cigs_daily_price'] = cigs_daily_price
+    savings_dict['cigs_monthly_price'] = cigs_monthly_price
+    savings_dict['cigs_yearly_price'] = cigs_yearly_price
+
+    savings_dict['ord_cigs_daily_price'] = ord_cigs_daily_price
+    savings_dict['ord_cigs_monthly_price'] = ord_cigs_monthly_price
+    savings_dict['ord_cigs_yearly_price'] = ord_cigs_yearly_price
+
+    savings_dict['ordinary_cig_price'] = ord_cig_price
+
+    return savings_dict
+
+def ordinary_cig_price():
+    ord_cigpack_price = 14
+    ord_cig_price = ord_cigpack_price / 20.0
+    ord_cig_price = round(ord_cig_price, 2)
+    print('fuct returns: ' + str(ord_cig_price))
+    return  ord_cig_price
+
 def main():
     clear_screen()
     print_header()
     user_data = input_data()
-    print user_data
-    print(cig_config(user_data['size'], user_data['rof']))
-
+    print('user_data=' + str(user_data))
+    #print(cig_config(user_data['size'], user_data['rof']))
+    ryo_costs_list = cig_config(user_data['size'], user_data['rof'])
+    print(ryo_costs_list)
+    ord_cig_price = ordinary_cig_price()
+    print('ord_cig_price=' + str(ord_cig_price))
+    smoker_savings_dict = get_savings(user_data['cigs_daily'], ryo_costs_list[0], ord_cig_price)
+    print(smoker_savings_dict)
 if __name__ == '__main__':
     main()
