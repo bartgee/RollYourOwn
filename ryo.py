@@ -20,10 +20,8 @@ class Cigarette(object):
 
     def tobacco(self, tobacco_weight=40, tobacco_price=18.0):
         if self.cig_size == 'slim':
-            #print(tobacco_weight)
             number_of_cigs = tobacco_weight / 0.5
         elif self.cig_size == 'regular':
-            #print('pack_weight=' + str(tobacco_weight)) # temporary
             number_of_cigs = tobacco_weight / 1.0
         self.tobacco_price = tobacco_price / number_of_cigs
         return round(self.tobacco_price, 2)
@@ -55,12 +53,10 @@ def cig_config(size='slim', rof='rolled'):
     if rof == 'rolled':
         cigs = Cigarette(size, 'rolled')
         new_prices_dict = get_or_set_prices(size, rof)
-        #print(new_prices_dict)
         if 'tobacco_weight' or 'tobacco_price' in new_prices_dict:
             prices_list = []
 
             for key, value in new_prices_dict.iteritems():
-                #print key, value
                 if re.match('tobacco', key):
                     prices_list.append(key + '=' + str(value))
             prices_string = ''
@@ -69,16 +65,13 @@ def cig_config(size='slim', rof='rolled'):
                 if len(prices_list) > 1:
                     prices_string = prices_string + ', '
             prices_string = prices_string[:-2]
-            #print(prices_string)
             code = 'cigs.tobacco({})'.format(prices_string)
-            #print('code=' + code)
             exec code
 
         if 'filters_quantity' or 'filters_price' in new_prices_dict:
             prices_list = []
 
             for key, value in new_prices_dict.iteritems():
-                #print key, value
                 if re.match('filters', key):
                     prices_list.append(key + '=' + str(value))
             prices_string = ''
@@ -87,16 +80,13 @@ def cig_config(size='slim', rof='rolled'):
                 if len(prices_list) > 1:
                     prices_string = prices_string + ', '
             prices_string = prices_string[:-2]
-            #print(prices_string)
             code = 'cigs.filters({})'.format(prices_string)
-            #print('code=' + code)
             exec code
 
         if 'paper_leaves_quantity' or 'paper_leaves_price' in new_prices_dict:
             prices_list = []
 
             for key, value in new_prices_dict.iteritems():
-                #print key, value
                 if re.match('paper', key):
                     prices_list.append(key + '=' + str(value))
             prices_string = ''
@@ -105,25 +95,19 @@ def cig_config(size='slim', rof='rolled'):
                 if len(prices_list) > 1:
                     prices_string = prices_string + ', '
             prices_string = prices_string[:-2]
-            #prices_dict['paper_leaves_price'] = float(paper_leaves_price)(prices_string)
             code = 'cigs.paper_leaves({})'.format(prices_string)
-            #print('code=' + code)
             exec code
-
-        #print(cigs.get_cig_price())
         cig_price = cigs.get_cig_price()
         pack_price = cigs.get_pack_price()
-        #print(pack_price)#raw_input()
+
     elif rof == 'filled':
         cigs = Cigarette(size, 'filled')
         new_prices_dict = get_or_set_prices(size, rof)
-        #print(new_prices_dict)
 
         if 'tobacco_weight' or 'tobacco_price' in new_prices_dict:
             prices_list = []
 
             for key, value in new_prices_dict.iteritems():
-                #print key, value
                 if re.match('tobacco', key):
                     prices_list.append(key + '=' + str(value))
             prices_string = ''
@@ -132,16 +116,13 @@ def cig_config(size='slim', rof='rolled'):
                 if len(prices_list) > 1:
                     prices_string = prices_string + ', '
             prices_string = prices_string[:-2]
-            #print(prices_string)
             code = 'cigs.tobacco({})'.format(prices_string)
-            #print('code=' + code)
             exec code
 
         if 'filter_tubes_quantity' or 'filter_tubes_price' in new_prices_dict:
             prices_list = []
 
             for key, value in new_prices_dict.iteritems():
-                #print key, value
                 if re.match('filter_tubes', key):
                     prices_list.append(key + '=' + str(value))
             prices_string = ''
@@ -150,13 +131,11 @@ def cig_config(size='slim', rof='rolled'):
                 if len(prices_list) > 1:
                     prices_string = prices_string + ', '
             prices_string = prices_string[:-2]
-            #print(prices_string)
             code = 'cigs.filter_tubes({})'.format(prices_string)
-            #print('code=' + code)
             exec code
         cig_price = cigs.get_cig_price()
         pack_price = cigs.get_pack_price()
-        #print(pack_price)
+
     return cig_price, pack_price
 
 def get_or_set_prices(size='slim', rof='rolled'):
@@ -218,7 +197,6 @@ def get_or_set_prices(size='slim', rof='rolled'):
         else:
             pass
 
-    #print('prices_dict=' + str(prices_dict))
     return prices_dict
 
 def input_data():
