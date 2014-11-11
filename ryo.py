@@ -317,25 +317,26 @@ def print_savings(ryo_savings_dict):
     print('Daily price of ordinary cigs: ' + str(ryo_savings_dict['ord_cigs_daily_price']))
     print('Monthly price of ordinary cigs: ' + str(ryo_savings_dict['ord_cigs_monthly_price']))
     print('Yearly price of ordinary cigs: ' + str(ryo_savings_dict['ord_cigs_yearly_price']))
-    print('*****************************************')
-    print('now, the actual savings... :-)')
-    print('*****************************************')
+    print('********************************************************************************')
+    print('the cost of RYO...')
+    print('********************************************************************************')
     print('Daily price of RYO cigs: ' + str(ryo_savings_dict['cigs_daily_price']))
+    print('Monthly price of RYO cigs: ' + str(ryo_savings_dict['cigs_monthly_price']))
+    print('Yearly price of RYO cigs: ' + str(ryo_savings_dict['cigs_yearly_price']))
+    print('********************************************************************************')
+    print('and now, the total savings... :-)')
+    print('********************************************************************************')
+    print('Daily savings on RYO: ' + str(ryo_savings_dict['savings_daily']) + ' ('
+          + str(round(ryo_savings_dict['savings_daily'] / ryo_savings_dict['ord_cigs_daily_price'] * 100, 1)) + '%)')
+    print('Monthly savings on RYO: ' + str(ryo_savings_dict['savings_monthly']) + ' ('
+          + str(round(ryo_savings_dict['savings_monthly'] / ryo_savings_dict['ord_cigs_monthly_price'] * 100, 1)) + '%)')
+    print('Yearly savings on RYO: ' + str(ryo_savings_dict['savings_yearly']) + ' ('
+          + str(round(ryo_savings_dict['savings_yearly'] / ryo_savings_dict['ord_cigs_yearly_price'] * 100, 1)) + '%)')
 
-    #savings_dict = {}
-    #savings_dict['cigs_monthly'] = cigs_monthly
-    #savings_dict['cigs_yearly'] = cigs_yearly
-    #savings_dict['cigs_daily_price'] = cigs_daily_price
-    #savings_dict['cigs_monthly_price'] = cigs_monthly_price
-    #savings_dict['cigs_yearly_price'] = cigs_yearly_price
-    # savings_dict['ord_cigs_daily_price'] = ord_cigs_daily_price
-    # savings_dict['ord_cigs_monthly_price'] = ord_cigs_monthly_price
-    # savings_dict['ord_cigs_yearly_price'] = ord_cigs_yearly_price
-    # savings_dict['savings_daily'] = savings_daily
-    # savings_dict['savings_monthly'] = savings_monthly
-    # savings_dict['savings_yearly'] = savings_yearly
-    # #savings_dict['ordinary_cig_price'] = ord_cig_price
-    # #return savings_dict
+def print_summary(ryo_savings_dict):
+    print('********************************************************************************')
+    print('better, not start to smoke - you will save up to '
+          + str(round(ryo_savings_dict['cigs_yearly_price'], 1)))
 
 def main():
     clear_screen()
@@ -346,6 +347,7 @@ def main():
     ord_cig_price = ordinary_cig_price()
     smoker_savings_dict = get_savings(user_data['cigs_daily'], ryo_costs_list[0], ord_cig_price)
     print_savings(smoker_savings_dict)
+    print_summary(smoker_savings_dict)
 
 if __name__ == '__main__':
     main()
