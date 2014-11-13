@@ -9,6 +9,10 @@ import os
 import platform
 import re
 
+currency = 'PLN'
+weight = 'g'
+quantity = 'pcs'
+
 class Cigarette(object):
 
     def __init__(self, cig_size='slim', rolled_or_filled='rolled'):
@@ -146,7 +150,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
     filter_tubes_params = cigs.filter_tubes.func_defaults
     paper_leaves_params = cigs.paper_leaves.func_defaults
 
-    tobacco_weight = raw_input('tobacco weight (' + str(tobacco_params[0]) + ') >')
+    tobacco_weight = raw_input('tobacco weight (' + str(tobacco_params[0]) + ')' + weight +' >')
     if tobacco_weight:
         prices_dict['tobacco_weight'] = float(tobacco_weight)
     else:
@@ -154,7 +158,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
     clear_screen()
     print_header()
 
-    tobacco_price = raw_input('tobacco price (' + str(tobacco_params[1]) + ') >')
+    tobacco_price = raw_input('tobacco price ({:.2f}'.format(tobacco_params[1]) + ')' + currency + ' >')
     if tobacco_price:
         prices_dict['tobacco_price'] = float(tobacco_price)
     else:
@@ -163,7 +167,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
     print_header()
 
     if rof == 'rolled':
-        filters_quantity = raw_input('filters quantity (' + str(filters_params[0]) + ') >')
+        filters_quantity = raw_input('filters quantity (' + str(filters_params[0]) + ')' + quantity + ' >')
         if filters_quantity:
             prices_dict['filters_quantity'] = int(filters_quantity)
         else:
@@ -171,7 +175,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
         clear_screen()
         print_header()
 
-        filters_price = raw_input('filters price (' + str(filters_params[1]) + ') >')
+        filters_price = raw_input('filters price ({:.2f}'.format(filters_params[1]) + ')' + currency + ' >')
         if filters_price:
             prices_dict['filters_price'] = float(filters_price)
         else:
@@ -180,7 +184,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
         print_header()
 
     if rof == 'filled':
-        filter_tubes_quantity = raw_input('filter tubes quantity (' + str(filter_tubes_params[0]) + ') >')
+        filter_tubes_quantity = raw_input('filter tubes quantity (' + str(filter_tubes_params[0]) + ')' + quantity + ' >')
         if filter_tubes_quantity:
             prices_dict['filter_tubes_quantity'] = int(filter_tubes_quantity)
         else:
@@ -188,7 +192,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
         clear_screen()
         print_header()
 
-        filter_tubes_price = raw_input('filter tubes price (' + str(filter_tubes_params[1]) + ') >')
+        filter_tubes_price = raw_input('filter tubes price ({:.2f}'.format(filter_tubes_params[1]) + ')' + currency + ' >')
         if filter_tubes_price:
             prices_dict['filter_tubes_price'] = float(filter_tubes_price)
         else:
@@ -197,7 +201,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
         print_header()
 
     if rof == 'rolled':
-        paper_leaves_quantity = raw_input('paper leaves quantity (' + str(paper_leaves_params[0]) + ') >')
+        paper_leaves_quantity = raw_input('paper leaves quantity (' + str(paper_leaves_params[0]) + ')' + quantity + ' >')
         if paper_leaves_quantity:
             prices_dict['paper_leaves_quantity'] = int(paper_leaves_quantity)
         else:
@@ -205,7 +209,7 @@ def get_or_set_prices(size='slim', rof='rolled'):
         clear_screen()
         print_header()
 
-        paper_leaves_price = raw_input('paper leaves price (' + str(paper_leaves_params[1]) + ') >')
+        paper_leaves_price = raw_input('paper leaves price ({:.2f}'.format(paper_leaves_params[1]) + ')' + currency + ' >')
         if paper_leaves_price:
             prices_dict['paper_leaves_price'] = float(paper_leaves_price)
         else:
@@ -317,34 +321,39 @@ def ordinary_cig_price():
 def print_savings(ryo_savings_dict):
     #print('********************************************************************************')
     print('ORDINARY CIGS COSTS')
-    print(' cig pack price:      ' + str(ryo_savings_dict['ordinary_cig_price'] * 20))
-    print(' cig price:           ' + str(ryo_savings_dict['ordinary_cig_price']))
-    print(' cigs/day:            ' + str(ryo_savings_dict['cigs_daily']))
-    print(' cigs/month:          ' + str(ryo_savings_dict['cigs_monthly']))
-    print(' cigs/year:           ' + str(ryo_savings_dict['cigs_yearly']))
-    print(' daily costs:         ' + str(ryo_savings_dict['ord_cigs_daily_price']))
-    print(' monthly costs:       ' + str(ryo_savings_dict['ord_cigs_monthly_price']))
-    print(' yearly costs:        ' + str(ryo_savings_dict['ord_cigs_yearly_price']))
+    print(' cig pack price:      {:.2f} {}'.format(ryo_savings_dict['ordinary_cig_price'] * 20, currency))
+    print(' cig price:           {:.2f} {}'.format(ryo_savings_dict['ordinary_cig_price'], currency))
+    print(' cigs/day:            {:.2f} {}'.format(ryo_savings_dict['cigs_daily'], quantity))
+    print(' cigs/month:          {:.2f} {}'.format(ryo_savings_dict['cigs_monthly'], quantity))
+    print(' cigs/year:           {:.2f} {}'.format(ryo_savings_dict['cigs_yearly'], quantity))
+    print(' daily costs:         {:.2f} {}'.format(ryo_savings_dict['ord_cigs_daily_price'], currency))
+    print(' monthly costs:       {:.2f} {}'.format(ryo_savings_dict['ord_cigs_monthly_price'], currency))
+    print(' yearly costs:        {:.2f} {}'.format(ryo_savings_dict['ord_cigs_yearly_price'], currency))
     #print('********************************************************************************')
     print('COSTS OF RYO')
-    print(' daily costs:         ' + str(ryo_savings_dict['cigs_daily_price']))
-    print(' monthly costs:       ' + str(ryo_savings_dict['cigs_monthly_price']))
-    print(' yearly costs:        ' + str(ryo_savings_dict['cigs_yearly_price']))
+    print(' daily costs:         {:.2f} {}'.format(ryo_savings_dict['cigs_daily_price'], currency))
+    print(' monthly costs:       {:.2f} {}'.format (ryo_savings_dict['cigs_monthly_price'], currency))
+    print(' yearly costs:        {:.2f} {}'.format(ryo_savings_dict['cigs_yearly_price'], currency))
     #print('********************************************************************************')
     print('SAVINGS ON RYO')
-    print(' daily:               ' + str(ryo_savings_dict['savings_daily']) + ' ('
-          + str(round(ryo_savings_dict['savings_daily'] / ryo_savings_dict['ord_cigs_daily_price'] * 100, 1)) + '%)')
-    print(' monthly:             ' + str(ryo_savings_dict['savings_monthly']) + ' ('
-          + str(round(ryo_savings_dict['savings_monthly'] / ryo_savings_dict['ord_cigs_monthly_price'] * 100, 1)) + '%)')
-    print(' yearly:              ' + str(ryo_savings_dict['savings_yearly']) + ' ('
-          + str(round(ryo_savings_dict['savings_yearly'] / ryo_savings_dict['ord_cigs_yearly_price'] * 100, 1)) + '%)')
+    print(' daily:               {:.2f} {}'
+          .format(ryo_savings_dict['savings_daily'], currency) + ' ('
+          + str(round(ryo_savings_dict['savings_daily']
+            / ryo_savings_dict['ord_cigs_daily_price'] * 100, 1)) + '%)')
+    print(' monthly:             {:.2f} {}'
+          .format(ryo_savings_dict['savings_monthly'], currency) + ' ('
+          + str(round(ryo_savings_dict['savings_monthly']
+            / ryo_savings_dict['ord_cigs_monthly_price'] * 100, 1)) + '%)')
+    print(' yearly:              {:.2f} {}'
+          .format(ryo_savings_dict['savings_yearly'], currency) + ' ('
+          + str(round(ryo_savings_dict['savings_yearly']
+            / ryo_savings_dict['ord_cigs_yearly_price'] * 100, 1)) + '%)')
 
 def print_summary(ryo_savings_dict):
     #print('********************************************************************************')
-    print('better, not start to smoke - you will save from '
-          + str(round(ryo_savings_dict['cigs_yearly_price'], 0))
-          + ' up to '
-          + str(round(ryo_savings_dict['ord_cigs_yearly_price'], 0)) + ' yearly.')
+    print('better quit smoking - you will save from {:.2f} {} up to {:.2f} {}'
+          .format(ryo_savings_dict['cigs_yearly_price'],
+            currency, ryo_savings_dict['ord_cigs_yearly_price'], currency))
 
 def main():
     clear_screen()
