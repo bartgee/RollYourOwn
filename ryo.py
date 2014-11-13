@@ -151,12 +151,16 @@ def get_or_set_prices(size='slim', rof='rolled'):
         prices_dict['tobacco_weight'] = float(tobacco_weight)
     else:
         pass
+    clear_screen()
+    print_header()
 
     tobacco_price = raw_input('tobacco price (' + str(tobacco_params[1]) + ') >')
     if tobacco_price:
         prices_dict['tobacco_price'] = float(tobacco_price)
     else:
         pass
+    clear_screen()
+    print_header()
 
     if rof == 'rolled':
         filters_quantity = raw_input('filters quantity (' + str(filters_params[0]) + ') >')
@@ -164,12 +168,16 @@ def get_or_set_prices(size='slim', rof='rolled'):
             prices_dict['filters_quantity'] = int(filters_quantity)
         else:
             pass
+        clear_screen()
+        print_header()
 
         filters_price = raw_input('filters price (' + str(filters_params[1]) + ') >')
         if filters_price:
             prices_dict['filters_price'] = float(filters_price)
         else:
             pass
+        clear_screen()
+        print_header()
 
     if rof == 'filled':
         filter_tubes_quantity = raw_input('filter tubes quantity (' + str(filter_tubes_params[0]) + ') >')
@@ -177,12 +185,16 @@ def get_or_set_prices(size='slim', rof='rolled'):
             prices_dict['filter_tubes_quantity'] = int(filter_tubes_quantity)
         else:
             pass
+        clear_screen()
+        print_header()
 
         filter_tubes_price = raw_input('filter tubes price (' + str(filter_tubes_params[1]) + ') >')
         if filter_tubes_price:
             prices_dict['filter_tubes_price'] = float(filter_tubes_price)
         else:
             pass
+        clear_screen()
+        print_header()
 
     if rof == 'rolled':
         paper_leaves_quantity = raw_input('paper leaves quantity (' + str(paper_leaves_params[0]) + ') >')
@@ -190,12 +202,16 @@ def get_or_set_prices(size='slim', rof='rolled'):
             prices_dict['paper_leaves_quantity'] = int(paper_leaves_quantity)
         else:
             pass
+        clear_screen()
+        print_header()
 
         paper_leaves_price = raw_input('paper leaves price (' + str(paper_leaves_params[1]) + ') >')
         if paper_leaves_price:
             prices_dict['paper_leaves_price'] = float(paper_leaves_price)
         else:
             pass
+        clear_screen()
+        print_header()
 
     return prices_dict
 
@@ -206,6 +222,8 @@ def input_data():
         cigs_daily = raw_input('how many cigs you smoke daily? >')
         if cigs_daily.isdigit():
             running = False
+            clear_screen()
+            print_header()
 
     running = True
     while running:
@@ -213,9 +231,13 @@ def input_data():
         if rof == 'r' or rof == 'R':
             rof = 'rolled'
             running = False
+            clear_screen()
+            print_header()
         elif rof == 'f' or rof == 'F':
             rof = 'filled'
             running = False
+            clear_screen()
+            print_header()
 
     running = True
     while running:
@@ -223,9 +245,14 @@ def input_data():
         if size == 's' or size == 'S':
             size = 'slim'
             running = False
+            clear_screen()
+            print_header()
         elif size == 'r' or size == 'R':
             size = 'regular'
             running = False
+            clear_screen()
+            print_header()
+
     input_dict = {'size': size, 'rof': rof, 'cigs_daily': int(cigs_daily)}
     return input_dict
 
@@ -241,7 +268,8 @@ def clear_screen():
         os.system('clear')
 
 def print_header():
-    print('RollYourOwn ' + __version__ )
+    print('RollYourOwn ' + __version__ + '|')
+    print('----------------')
 
 def get_savings(cigs_daily, ryo_cig_price, ord_cig_price):
     savings_dict = {}
@@ -287,40 +315,43 @@ def ordinary_cig_price():
     return  ord_cig_price
 
 def print_savings(ryo_savings_dict):
-    print('Ordinary cig pack price: ' + str(ryo_savings_dict['ordinary_cig_price'] * 20))
-    print('Ordinary cig price: ' + str(ryo_savings_dict['ordinary_cig_price']))
-    print('Cigs smoked per day: ' + str(ryo_savings_dict['cigs_daily']))
-    print('Cigs smoked per month: ' + str(ryo_savings_dict['cigs_monthly']))
-    print('Cigs smoked per year: ' + str(ryo_savings_dict['cigs_yearly']))
-    print('Daily price of ordinary cigs: ' + str(ryo_savings_dict['ord_cigs_daily_price']))
-    print('Monthly price of ordinary cigs: ' + str(ryo_savings_dict['ord_cigs_monthly_price']))
-    print('Yearly price of ordinary cigs: ' + str(ryo_savings_dict['ord_cigs_yearly_price']))
-    print('********************************************************************************')
-    print('the cost of RYO...')
-    print('********************************************************************************')
-    print('Daily price of RYO cigs: ' + str(ryo_savings_dict['cigs_daily_price']))
-    print('Monthly price of RYO cigs: ' + str(ryo_savings_dict['cigs_monthly_price']))
-    print('Yearly price of RYO cigs: ' + str(ryo_savings_dict['cigs_yearly_price']))
-    print('********************************************************************************')
-    print('and now, the total savings... :-)')
-    print('********************************************************************************')
-    print('Daily savings on RYO: ' + str(ryo_savings_dict['savings_daily']) + ' ('
+    #print('********************************************************************************')
+    print('ORDINARY CIGS COSTS')
+    print(' cig pack price:      ' + str(ryo_savings_dict['ordinary_cig_price'] * 20))
+    print(' cig price:           ' + str(ryo_savings_dict['ordinary_cig_price']))
+    print(' cigs/day:            ' + str(ryo_savings_dict['cigs_daily']))
+    print(' cigs/month:          ' + str(ryo_savings_dict['cigs_monthly']))
+    print(' cigs/year:           ' + str(ryo_savings_dict['cigs_yearly']))
+    print(' daily costs:         ' + str(ryo_savings_dict['ord_cigs_daily_price']))
+    print(' monthly costs:       ' + str(ryo_savings_dict['ord_cigs_monthly_price']))
+    print(' yearly costs:        ' + str(ryo_savings_dict['ord_cigs_yearly_price']))
+    #print('********************************************************************************')
+    print('COSTS OF RYO')
+    print(' daily costs:         ' + str(ryo_savings_dict['cigs_daily_price']))
+    print(' monthly costs:       ' + str(ryo_savings_dict['cigs_monthly_price']))
+    print(' yearly costs:        ' + str(ryo_savings_dict['cigs_yearly_price']))
+    #print('********************************************************************************')
+    print('SAVINGS ON RYO')
+    print(' daily:               ' + str(ryo_savings_dict['savings_daily']) + ' ('
           + str(round(ryo_savings_dict['savings_daily'] / ryo_savings_dict['ord_cigs_daily_price'] * 100, 1)) + '%)')
-    print('Monthly savings on RYO: ' + str(ryo_savings_dict['savings_monthly']) + ' ('
+    print(' monthly:             ' + str(ryo_savings_dict['savings_monthly']) + ' ('
           + str(round(ryo_savings_dict['savings_monthly'] / ryo_savings_dict['ord_cigs_monthly_price'] * 100, 1)) + '%)')
-    print('Yearly savings on RYO: ' + str(ryo_savings_dict['savings_yearly']) + ' ('
+    print(' yearly:              ' + str(ryo_savings_dict['savings_yearly']) + ' ('
           + str(round(ryo_savings_dict['savings_yearly'] / ryo_savings_dict['ord_cigs_yearly_price'] * 100, 1)) + '%)')
 
 def print_summary(ryo_savings_dict):
-    print('********************************************************************************')
-    print('better, not start to smoke - you will save up to '
-          + str(round(ryo_savings_dict['cigs_yearly_price'], 1)))
+    #print('********************************************************************************')
+    print('better, not start to smoke - you will save from '
+          + str(round(ryo_savings_dict['cigs_yearly_price'], 0))
+          + ' up to '
+          + str(round(ryo_savings_dict['ord_cigs_yearly_price'], 0)) + ' yearly.')
 
 def main():
     clear_screen()
     print_header()
     user_data = input_data()
-    print('user_data=' + str(user_data))
+    #print('user_data=' + str(user_data))
+    #clear_screen()
     ryo_costs_list = cig_config(user_data['size'], user_data['rof'])
     ord_cig_price = ordinary_cig_price()
     smoker_savings_dict = get_savings(user_data['cigs_daily'], ryo_costs_list[0], ord_cig_price)
